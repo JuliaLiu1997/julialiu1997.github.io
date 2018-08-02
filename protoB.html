@@ -1,0 +1,43 @@
+<html>
+<head>
+
+
+<!--[if lt IE 9]><script type="text/javascript">var IE_fix=true;</script><![endif]-->
+<script type="text/javascript">
+
+function reDirectFuction(){
+
+    var url = "endOfStudy.html";
+    if(typeof IE_fix != "undefined") // IE8 and lower fix to pass the http referer
+    {
+        document.write("redirecting..."); // Don't remove this line or appendChild() will fail because it is called before document.onload to make the redirect as fast as possible. Nobody will see this text, it is only a tech fix.
+        var referLink = document.createElement("a");
+        referLink.href = url;
+        document.body.appendChild(referLink);
+        referLink.click();
+    }
+    else { window.location.replace(url); } // All other browsers
+    
+    };
+    
+</script>
+
+<script type="text/javascript">
+  window._mfq = window._mfq || [];
+  (function() {
+    var mf = document.createElement("script");
+    mf.type = "text/javascript"; mf.async = true;
+    mf.src = "//cdn.mouseflow.com/projects/28b04b84-1353-4c5a-9202-af2626a319c2.js";
+    document.getElementsByTagName("head")[0].appendChild(mf);
+  })();
+</script>
+
+</head>
+<body>
+
+<h1>Welcome to AB Test
+</h1>
+<Button onclick="reDirectFuction()">Click Here</Button>
+
+</body>
+</html>
