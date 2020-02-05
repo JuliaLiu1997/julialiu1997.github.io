@@ -1,9 +1,9 @@
 
 $(document).ready(function(){
-    
+    /* Click Events */
+    /* Ignore normal url and display contents for the questions */
     $("#result").on("click","a",function(e){
         if ($(this).attr("class")!="q-title"){
-            window.open(this.attr("href"),'_blank')
             return;
         }
         e.preventDefault();
@@ -12,7 +12,7 @@ $(document).ready(function(){
     });
     
 
-
+    /* Search Events */
     $("button").click(function(){
         var numberOfResult = 0;
         var sort;
@@ -56,6 +56,8 @@ $(document).ready(function(){
     });
 });
 
+/* Form Question Title & Content */
+/* Display Search Result */
 function addElement(object, id){
     var htmlResult = "";
    
