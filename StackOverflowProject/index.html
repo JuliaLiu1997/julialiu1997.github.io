@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stack Overflow Project</title>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/custom.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Stack Overflow Project</a>
+          </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div>
+            <h1>Stack Overflow Project</h1>
+            <p class="lead">Enter a tag and search for 10 newest questions or the 10 most voted questions posted in the past week</p>
+            <div class="search-field">
+                <form action=""> 
+                    <input type="radio" name="type" value="creation"  checked="checked"  /> Newest</input>
+                    <input type="radio" name="type" value="votes" /> Votes</input>
+                </form> 
+                <input class="parameter-input" id="tag" type="text" name="tag" placeholder="ex: Android">
+                <button class="btn btn-small btn-primary search-button" >Search</button>
+            </div>
+        </div>
+    </div>
+      
+
+
+
+<div class="container">
+    <div class = "search-result-field">
+        <h4 id="result-number">Result: </h4>
+        <div class = search-result id = result></div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
