@@ -1,10 +1,14 @@
-$(".discover a").click(function(e){
-	e.preventDefault();
-	var myClass=$(this).attr("id");
-	$(".dis-content ."+myClass).toggle('slow');
-});
 
 $(document).ready(function(){
+    
+    $("#result").on("click","a",function(e){
+        e.preventDefault();
+        var myClass=$(this).attr("id");
+        $(".dis-content ."+myClass).toggle('slow');
+    });
+    
+
+
     $("button").click(function(){
         var numberOfResult = 0;
         var sort = "";
@@ -36,7 +40,7 @@ $(document).ready(function(){
                     if (numberOfResult == 10){
                         return false;
                      }
-                    addElement(result);
+                    addElement(result, numberOfResult);
                     numberOfResult++;
                 });
                 
@@ -48,14 +52,14 @@ $(document).ready(function(){
     });
 });
 
-function addElement(object){
+function addElement(object, id){
     var htmlResult = "";
    
-    htmlResult += '<div class = dis-Question>';
-    htmlResult += '<h3>'+object.title+'</h3>';
-    htmlResult += '<div class = dis-content>';
+    htmlResult += '<div class="dis-question">';
+    htmlResult += '<div class="dis-title"><a href="#" id='+id+'><h4>'+object.title+'</h4></a></div>';
+    htmlResult += '<div class="dis-content"><div class='+id+' ">';
     htmlResult += object.body;
-    htmlResult += '</div></div>';
+    htmlResult += '</div></div></div>';
     document.getElementById("result").innerHTML += htmlResult;
 
 }
