@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="./grouped_lat_lon_4.js"></script>
+    <style type="text/css">
+       #mapid { height: 900px; }
+    </style>
+</head>
+<body>
+    <div id="mapid"></div>
+</body>
+<script>
+    var greater1000 = [];
+    var greater500 = [];
+    var greater100 = [];
+    var greater20 = [];
+    
+    var black = L.icon({
+        iconUrl: 'black.png', shadowUrl: 'shadow.png', iconSize: [25, 41], shadowSize:[41, 41], 
+        iconAnchor:   [13, 21], shadowAnchor: [0, 41],  popupAnchor:  [-3, -21] 
+    });
+    var grey = L.icon({
+        iconUrl: 'grey.png', shadowUrl: 'shadow.png', iconSize: [25, 41], shadowSize:[41, 41], 
+        iconAnchor:   [13, 21], shadowAnchor: [0, 41],  popupAnchor:  [-3, -21] 
+    });
+    var light = L.icon({
+        iconUrl: 'light.png', shadowUrl: 'shadow.png', iconSize: [25, 41], shadowSize:[41, 41], 
+        iconAnchor:   [13, 21], shadowAnchor: [0, 41],  popupAnchor:  [-3, -21] 
+    });
+
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].Count >= 1000){
+            var marker = L.marker([data[i].Latitude, data[i].Longitude],{icon: black});
+            marker.bindPopup('<b>'+data[i].Latitude+','+data[i].Longitude+'</b><br>'+data[i].Count+' count.');
+            greater1000.push(marker);
+        }else if((data[i].Count >= 500)){
+            var marker = L.marker([data[i].Latitude, data[i].Longitude],{icon: grey});
+            marker.bindPopup('<b>'+data[i].Latitude+','+data[i].Longitude+'</b><br>'+data[i].Count+' count.');
+            greater500.push(marker);
+        }else if((data[i].Count >= 100)){
+            var marker = L.marker([data[i].Latitude, data[i].Longitude]);
+            marker.bindPopup('<b>'+data[i].Latitude+','+data[i].Longitude+'</b><br>'+data[i].Count+' count.');
+            greater100.push(marker);
+        }else if((data[i].Count >= 20)){
+            var marker = L.marker([data[i].Latitude, data[i].Longitude],{icon: light});
+            marker.bindPopup('<b>'+data[i].Latitude+','+data[i].Longitude+'</b><br>'+data[i].Count+' count.');
+            greater20.push(marker);
+        }
+    }
+
+    var g1000 = L.layerGroup(greater1000);
+    var g500 = L.layerGroup(greater500);
+    var g100 = L.layerGroup(greater100);
+    var g20 = L.layerGroup(greater20);
+
+
+	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	var streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+
+	var map = L.map('mapid', {
+		center: [44.231, -76.485],
+		zoom: 11,
+		layers: [streets, g1000, g500, g100, g20]
+	});
+
+	var baseLayers = {
+		"Streets": streets
+	};
+
+	var overlays = {
+        ">1000": g1000,
+        ">500": g500,
+        ">100": g100,
+        ">20": g20
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(map);
+
+</script>
+</html>
