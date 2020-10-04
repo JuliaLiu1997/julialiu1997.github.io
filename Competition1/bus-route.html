@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-    
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <script src="./grouped_lat_lon.js"></script>
-    <script src="./bus-stop.js"></script>
     <script src="./transit-route.js"></script>
     <style type="text/css">
        #mapid { height: 900px; }
@@ -16,36 +13,142 @@
     <div id="mapid"></div>
 </body>
 <script>
-   
+    var r1 = [], r2 = [], r3 = [], r4 = [], r6 = [], r7 = [], r8 = [], r10 = [], r11 = [], r12 = [], r14 = [], r15 = [], r16 = [],
+        r501 = [], r502 = [], r601 = [], r602 = [], r701 = [], r702 = [], r801 = [], r802 = [];
+    var color = ["#231F20","#F99D31","GRAY","BLACK","RED","MAROON","YELLOW","OLIVE","LIME","GREEN","AQUA","TEAL","BLUE","NAVY","FUCHSIA","PURPLE","#D98880","#9B59B6","#8E44AD","#2980B9","#3498DB"]
 
 
-   var map = L.map('mapid').setView([44.231, -76.485], 13);
-
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    maxZoom: 18,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    id: 'mapbox/light-v9',
-    tileSize: 512,
-    zoomOffset: -1
-}).addTo(map);
-
-
-var color = ["WHITE","SILVER","GRAY","BLACK","RED","MAROON","YELLOW","OLIVE","LIME","GREEN","AQUA","TEAL","BLUE","NAVY","FUCHSIA","PURPLE","#D98880","E74C3C","9B59B6","8E44AD","2980B9","3498DB"]
-var data_length =  route.length;
+   var data_length =  route.length;
 for (var i = 0; i < data_length; i++) {
-    console.log(route[i].ID);
     var l = L.geoJSON(route[i].geometry, {
     style: {
     "color": color[i],
     "weight": 5,
     "opacity": 0.65
 }
-    }).addTo(map);
-    l.bindPopup('<b>Route '+route[i].ID +'<b>');
 
-}
+    })
+    console.log(route[i].ID+": "+color[i]);
+    l.bindPopup('<b>Route '+route[i].ID +'<b>');
+        switch(route[i].ID)
+        {
+            case 1:
+                r1.push(l);
+                break;
+            case 2:
+                r2.push(l);
+                break;
+            case 3:
+                r3.push(l);
+                break;
+            case 4:
+                r4.push(l);
+                break;
+            case 6:
+                r6.push(l);
+                break;
+            case 7:
+                r7.push(l);
+                break;
+            case 8:
+                r8.push(l);
+                break;
+            case 10:
+                r10.push(l);
+                break;
+            case 11:
+                r11.push(l);
+                break;
+            case 12:
+                r12.push(l);
+                break;
+            case 14:
+                r14.push(l);
+                break;
+            case 15:
+                r15.push(l);
+                break;
+            case 16:
+                r16.push(l);
+                break;
+            case 501:
+                r501.push(l);
+                break;
+            case 502:
+                r502.push(l);
+                break;
+            case 601:
+                r601.push(l);
+                break;
+            case 602:
+                r602.push(l);
+                break;
+            case 701:
+                r701.push(l);
+                break;
+            case 702:
+                r702.push(l);
+                break;
+            case 801:
+                r801.push(l);
+                break;
+            case 802:
+                r802.push(l);
+                break;
+            default:
+                
+        }
+    }
+
+    var l1 = L.layerGroup(r1), l2 = L.layerGroup(r2), l3 = L.layerGroup(r3), l4 = L.layerGroup(r4), l6 = L.layerGroup(r6), l7 = L.layerGroup(r7),
+        l8 = L.layerGroup(r8), l10 = L.layerGroup(r10),  l11 = L.layerGroup(r11), l12 = L.layerGroup(r12), l14 = L.layerGroup(r14), 
+        l15 = L.layerGroup(r15), l16 = L.layerGroup(r16), l501 = L.layerGroup(r501), l502 = L.layerGroup(r502), 
+        l601 = L.layerGroup(r601), l602 = L.layerGroup(r602), l701 = L.layerGroup(r701), l702 = L.layerGroup(r702), 
+        l801 = L.layerGroup(r801), l802 = L.layerGroup(r802);
+
+   var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	var streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+
+	var map = L.map('mapid', {
+		center: [44.231, -76.485],
+		zoom: 11,
+		layers: [streets, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802]
+	});
+
+	var baseLayers = {
+		"Streets": streets
+	};
+
+	var overlays = {
+        "Route 1": l1,
+        "Route 2": l2,
+        "Route 3": l3,
+        "Route 4": l4,
+        "Route 6": l6,
+        "Route 7": l7,
+        "Route 8": l8,
+        "Route 10": l10,
+        "Route 11": l11,
+        "Route 12": l12,
+        "Route 14": l14,
+        "Route 15": l15,
+        "Route 16": l16,
+        "Route 501": l501,
+        "Route 502": l502,
+        "Route 601": l601,
+        "Route 602": l602,
+        "Route 701": l701,
+        "Route 702": l702,
+        "Route 801": l801,
+        "Route 802": l802
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(map);
+
 
 
 </script>
