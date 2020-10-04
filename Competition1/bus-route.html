@@ -106,6 +106,17 @@ for (var i = 0; i < data_length; i++) {
         l601 = L.layerGroup(r601), l602 = L.layerGroup(r602), l701 = L.layerGroup(r701), l702 = L.layerGroup(r702), 
         l801 = L.layerGroup(r801), l802 = L.layerGroup(r802);
 
+        var grayscale  = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/light-v9',
+		tileSize: 512,
+		zoomOffset: -1
+	});
+
+
    var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -116,11 +127,12 @@ for (var i = 0; i < data_length; i++) {
 	var map = L.map('mapid', {
 		center: [44.231, -76.485],
 		zoom: 11,
-		layers: [streets, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802]
+		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802]
 	});
 
 	var baseLayers = {
-		"Streets": streets
+        "Grayscale": grayscale,
+        "Streets": streets
 	};
 
 	var overlays = {
