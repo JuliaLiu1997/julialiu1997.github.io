@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="./transit-route.js"></script>
     <script src="./new_bus_stop.js"></script>
+    <script src="./bus-stop.js"></script>
     <style type="text/css">
        #mapid { height: 900px; }
     </style>
@@ -100,10 +101,29 @@ for (var i = 0; i < data_length; i++) {
                 
         }
     }
-    var stop = [];
+
+    var red = L.icon({
+    iconUrl: 'red.png',
+    shadowUrl: 'shadow.png',
+
+    iconSize:     [25, 41], // size of the icon
+    shadowSize:   [41, 41], // size of the shadow
+    iconAnchor:   [13, 21], // point of the icon which will correspond to marker's location
+    shadowAnchor: [0, 41],  // the same for the shadow
+    popupAnchor:  [-3, -21] // point from which the popup should open relative to the iconAnchor
+});
+    var newstop = [];
     for (var i = 0; i < newBus.length; i++) {
         var marker = L.marker([newBus[i].Latitude, newBus[i].Longitude]);
         marker.bindPopup('<b>'+newBus[i].Latitude+','+newBus[i].Longitude+'</b>');
+        newstop.push(marker);
+    }
+    var new_bus_stop = L.layerGroup(newstop);
+
+    var stop = [];
+    for (var i = 0; i < bus.length; i++) {
+        var marker = L.marker([bus[i].Latitude, bus[i].Longitude],{icon: red});
+        marker.bindPopup('<b>'+bus[i].Latitude+','+bus[i].Longitude+'</b>');
         stop.push(marker);
     }
     var bus_stop = L.layerGroup(stop);
@@ -135,7 +155,7 @@ for (var i = 0; i < data_length; i++) {
 	var map = L.map('mapid', {
 		center: [44.231, -76.485],
 		zoom: 11,
-		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802, bus_stop]
+		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802, bus_stop, new_bus_stop]
 	});
 
 	var baseLayers = {
@@ -165,7 +185,8 @@ for (var i = 0; i < data_length; i++) {
         "Route 702": l702,
         "Route 801": l801,
         "Route 802": l802,
-        "Driveways Centers": bus_stop
+        "Driveways Centers": new_bus_stop,
+        "Current Bus Stop": bus_stop
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(map);
