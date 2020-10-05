@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="./transit-route.js"></script>
+    <script src="./new_bus_stop.js"></script>
     <style type="text/css">
        #mapid { height: 900px; }
     </style>
@@ -99,6 +100,13 @@ for (var i = 0; i < data_length; i++) {
                 
         }
     }
+    var stop = [];
+    for (var i = 0; i < newBus.length; i++) {
+        var marker = L.marker([newBus[i].Latitude, newBus[i].Longitude]);
+        marker.bindPopup('<b>'+newBus[i].Latitude+','+newBus[i].Longitude+'</b>');
+        stop.push(marker);
+    }
+    var bus_stop = L.layerGroup(stop);
 
     var l1 = L.layerGroup(r1), l2 = L.layerGroup(r2), l3 = L.layerGroup(r3), l4 = L.layerGroup(r4), l6 = L.layerGroup(r6), l7 = L.layerGroup(r7),
         l8 = L.layerGroup(r8), l10 = L.layerGroup(r10),  l11 = L.layerGroup(r11), l12 = L.layerGroup(r12), l14 = L.layerGroup(r14), 
@@ -127,7 +135,7 @@ for (var i = 0; i < data_length; i++) {
 	var map = L.map('mapid', {
 		center: [44.231, -76.485],
 		zoom: 11,
-		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802]
+		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802, bus_stop]
 	});
 
 	var baseLayers = {
@@ -156,7 +164,8 @@ for (var i = 0; i < data_length; i++) {
         "Route 701": l701,
         "Route 702": l702,
         "Route 801": l801,
-        "Route 802": l802
+        "Route 802": l802,
+        "New Bus Stops": bus_stop
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(map);
