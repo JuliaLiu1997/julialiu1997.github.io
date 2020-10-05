@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="./transit-route.js"></script>
+    <script src="./bus-stop.js"></script>
     <script src="./grouped_lat_lon_4.js"></script>
     <style type="text/css">
        #mapid { height: 900px; }
@@ -149,6 +150,25 @@ for (var i = 0; i < data_length; i++) {
     var g100 = L.layerGroup(greater100);
     var g20 = L.layerGroup(greater20);
 
+    var red = L.icon({
+    iconUrl: 'red.png',
+    shadowUrl: 'shadow.png',
+
+    iconSize:     [25, 41], // size of the icon
+    shadowSize:   [41, 41], // size of the shadow
+    iconAnchor:   [13, 21], // point of the icon which will correspond to marker's location
+    shadowAnchor: [0, 41],  // the same for the shadow
+    popupAnchor:  [-3, -21] // point from which the popup should open relative to the iconAnchor
+});
+
+    var stop = [];
+    for (var i = 0; i < bus.length; i++) {
+        var marker = L.marker([bus[i].Latitude, bus[i].Longitude],{icon: red});
+        marker.bindPopup('<b>'+bus[i].Latitude+','+bus[i].Longitude+'</b>');
+        stop.push(marker);
+    }
+    var bus_stop = L.layerGroup(stop);
+
         var grayscale  = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -170,7 +190,7 @@ for (var i = 0; i < data_length; i++) {
 	var map = L.map('mapid', {
 		center: [44.231, -76.485],
 		zoom: 11,
-		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802,  g1000, g500, g100, g20]
+		layers: [streets, grayscale, l1, l2, l3, l4, l6, l7, l8, l10, l11, l12, l14, l15, l16, l501, l502, l601, l602, l701, l702, l801, l802,  g1000, g500, g100, g20, bus_stop]
 	});
 
 	var baseLayers = {
@@ -203,7 +223,8 @@ for (var i = 0; i < data_length; i++) {
         ">1000": g1000,
         ">500": g500,
         ">100": g100,
-        ">20": g20
+        ">20": g20,
+        "bus_stop": bus_stop
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(map);
